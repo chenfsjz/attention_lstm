@@ -40,8 +40,6 @@ void IndtanhLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   CHECK((indtanh_param.has_attention_weight_filler()))
       << "indtanh_param.has_attention_weight_filler()";
   
-
-   
   //the lstm input_data 300x500
   num_ = bottom[1]->shape(0);
   input_data_size_ = bottom[1]->shape(1);
@@ -52,33 +50,6 @@ void IndtanhLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   N_ = channels_;           
   K_ = input_data_size_;    
   num_hidden = bottom[0]->shape(1);      
-
-  
-  /*vector<int>weight_shape1(2);
-  weight_shape1[0] = channels_;         
-  weight_shape1[1] = num_hidden;    
-  this->blobs_[0].reset(new Blob<Dtype>(weight_shape1));   //Wa    250x250
-  
-  vector<int>weight_shape2(2);
-  weight_shape2[0] = channels_;       
-  weight_shape2[1] = input_data_size_;
-  this->blobs_[1].reset(new Blob<Dtype>(weight_shape2));   //Ua   1000x500
-  
-  
- 
-  
-  
-  //fill the weight
-  shared_ptr<Filler<Dtype> > lstm_hidden_weight_filler(GetFiller<Dtype>(
-      indtanh_param.lstm_hidden_weight_filler()));
-  lstm_hidden_weight_filler->Fill(this->blobs_[0].get());  //1000x250
-
-  shared_ptr<Filler<Dtype> > attention_weight_filler(GetFiller<Dtype>(
-  	indtanh_param.attention_weight_filler()));
-  attention_weight_filler->Fill(this->blobs_[1].get());    //1000x500
-  */
-
-  
   lstm_hidden_data_buffer_.reset(new Blob<Dtype>());
   this->buffers_.push_back(lstm_hidden_data_buffer_);
   attention_data_buffer_.reset(new Blob<Dtype>());
